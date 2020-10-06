@@ -43,7 +43,7 @@ function createMap(earthquakes) {
 
   // Create the map object with options
   var map = L.map("mapid", {
-    center: [40.73, -74.0059],
+    center: [39.8283, -98.5795],
     zoom: 12,
     layers: [lightmap],
   });
@@ -51,7 +51,7 @@ function createMap(earthquakes) {
   // Create a layer control and add to the map
   L.control
     .layers(baseMaps, {
-      collapsed: false,
+      collapsed: true,
     })
     .addTo(map);
 }
