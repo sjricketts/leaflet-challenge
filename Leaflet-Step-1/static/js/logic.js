@@ -1,27 +1,4 @@
-// Store API json for Earthquakes
-var queryUrl =
-  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-
-// Use D3 to request Earthquake Info
-d3.json(queryUrl, function(data) {
-  createFeatures(data.geometry);
-});
-
-function createFeatures(earthquakeData) {
-  // Create a function for to bind popups
-  function onEachFeature(geometry, layer) {
-    layer.bindPopup("<h3>" + geometry.coordinates[0] + geometry.coordinates[1] + "</h3><hr><p>" + geometry.coordinates[2] +"</p>"
-    );
-  }
-  // Create a GeoJSON layer containing the features array on the earthquakeData object
-  // Run the onEachFeature function once for each piece of data in the array
-  var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature,
-  });
-
-  // Sending our earthquakes layer to the createMap function
-  createMap(earthquakes);
-}
+// Create the map
 
 function createMap(earthquakes) {
   // Create tile layer for background
@@ -61,3 +38,37 @@ function createMap(earthquakes) {
       collapsed: false,
     }).addTo(map);
 }
+
+// Create Markers for Map
+function createMarkers(response) {
+  // Get info
+  var earthquakes = response.data.geometry;
+
+  // Initialize array
+  var quakeMarkers = [];
+  
+  // Loop through earthquakes array
+  for (var index = 0; index < earthquakes.length; index++) {
+    var earthquake = earthquakes[index];
+
+    // Create marker and bind popup for each earthquake
+    var quakeMarker = L.marker([
+      earthquake.geometry.coordinates[1],
+      earthquake.geometry.coordinates[0]]).bindPopUp(
+      "<h3>" +
+        earthquake.geometry.coordinates[1] + earthquake.geometry.coordinates[0] +
+        "</h3><hr><h3> " +
+        earthquake.geometry.coordinates[2] +
+        "</h3>"
+    );
+
+    // Add marker to the array
+    quakeMarkers.push(quakeMarker);
+  }
+  // Create layer group and add to createMap function
+  createMap(L.layerGroup(quakeMarkers));
+}
+
+d3.json(
+  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", createMarkers
+);
