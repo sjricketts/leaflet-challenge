@@ -42,7 +42,7 @@ function createMap(earthquakes) {
 // Create Markers for Map
 function createMarkers(response) {
   // Get info
-  var earthquakes = response.data.geometry;
+  var earthquakes = response.features;
 
   // Initialize array
   var quakeMarkers = [];
@@ -51,15 +51,12 @@ function createMarkers(response) {
   for (var index = 0; index < earthquakes.length; index++) {
     var earthquake = earthquakes[index];
 
-    // Create marker and bind popup for each earthquake
-    var quakeMarker = L.marker([
+    // Create circle marker and bind popup for each earthquake
+    var quakeMarker = L.circleMarker([
       earthquake.geometry.coordinates[1],
-      earthquake.geometry.coordinates[0]]).bindPopUp(
-      "<h3>" +
-        earthquake.geometry.coordinates[1] + earthquake.geometry.coordinates[0] +
-        "</h3><hr><h3> " +
-        earthquake.geometry.coordinates[2] +
-        "</h3>"
+      earthquake.geometry.coordinates[0],
+      ]).bindPopUp("<h3>Magnitude: " + earthquake.properties.mag +
+        "</h3><br><h3>Depth: " + earthquake.geometry.coordinates[2] + "</h3>"
     );
 
     // Add marker to the array
