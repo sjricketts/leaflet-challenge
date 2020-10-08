@@ -46,21 +46,21 @@ d3.json(
     // create different colors for depth
     function getColor(depth) {
       switch (true) {
-        case depth > 5:
-          return "#810f7c";
-        case depth > 4:
-          return "#810f7c ";
-        case depth > 3:
-          return "#8856a7";
-        case depth > 2:
-          return "#8c96c6";
-        case depth > 1:
-          return "#b3cde3";
+        case depth > 90:
+          return "#253494";
+        case depth > 70:
+          return "#2c7fb8 ";
+        case depth > 50:
+          return "#41b6c4";
+        case depth > 30:
+          return "#7fcdbb";
+        case depth > 10:
+          return "#c7e9b4";
         default:
-          return "#edf8fb";
+          return "#ffffcc";
       }
     }
-
+    
     L.geoJson(data, {
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng);
@@ -80,16 +80,16 @@ d3.json(
 
     legend.onAdd = function (map) {
       var div = L.DomUtil.create("div", "info legend"),
-        mags = [0, 1, 2, 3, 4, 5];
+        depth = [0, 10, 30, 50, 70, 90];
 
       // loop through intervals and generate a colored square for each
-      for (var i = 0; i < mags.length; i++) {
+      for (var i = 0; i < depth.length; i++) {
         div.innerHTML +=
           '<i style="background:' +
-          getColor(mags[i] + 1) +
+          getColor(depth[i] + 1) +
           '"></i> ' +
-          mags[i] +
-          (mags[i + 1] ? "&ndash;" + mags[i + 1] + "<br>" : "+");
+          depth[i] +
+          (depth[i + 1] ? "&ndash;" + depth[i + 1] + "<br>" : "+");
       }
 
       return div;
