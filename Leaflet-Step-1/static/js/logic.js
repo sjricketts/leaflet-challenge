@@ -39,6 +39,7 @@ function createMap(earthquakes) {
     }).addTo(map);
 }
 
+
 // Create Markers for Map
 function createMarkers(response) {
   // Get info
@@ -67,5 +68,7 @@ function createMarkers(response) {
 }
 
 d3.json(
-  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", createMarkers
+  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", function(data) {
+    createMap(data.feature);
+  }
 );
