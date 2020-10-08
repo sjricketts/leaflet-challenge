@@ -39,7 +39,7 @@ d3.json(
       };
     }
 
-    // create radius for circles
+    // create magnitude radius for circles
     function getRadius(magnitude) {
       return magnitude * 4;
     }
@@ -61,12 +61,13 @@ d3.json(
       }
     }
     
+    // creat circle markers and bind popups
     L.geoJson(data, {
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng);
       },
       style: styleInfo,
-      onEachLayer: function (feature, layer) {
+      onEachFeature: function (feature, layer) {
         layer.bindPopup(
           "Magnitude: " +
             feature.properties.mag +
@@ -76,6 +77,7 @@ d3.json(
       },
     }).addTo(map);
 
+    // Add legend
     var legend = L.control({ position: "bottomright" });
 
     legend.onAdd = function (map) {
@@ -91,7 +93,6 @@ d3.json(
           depth[i] +
           (depth[i + 1] ? "&ndash;" + depth[i + 1] + "<br>" : "+");
       }
-
       return div;
     };
 
