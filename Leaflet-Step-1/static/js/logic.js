@@ -69,7 +69,7 @@ d3.json(
       style: styleInfo,
       onEachFeature: function (feature, layer) {
         layer.bindPopup(
-          "Magnitude: " +
+          "Location: " + feature.properties.place + "<hr> Magnitude: " +
             feature.properties.mag +
             "<br> Depth: " +
             feature.geometry.coordinates[2]
