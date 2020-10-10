@@ -19,7 +19,7 @@ var baseMaps = {
 // Create the map object with options
 var map = L.map("mapid", {
   center: [39.8283, -98.5795],
-  zoom: 3,
+  zoom: 3.5,
   layers: [lightmap],
 });
 
